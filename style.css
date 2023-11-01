@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-size: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameboard {
+    background-color: antiquewhite;
+    border: solid black 2px;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
+
+#zero, #one, #two, #three, #four, #five {
+    border-bottom: solid black 2px;
+}
+
+#zero, #one, #three, #four, #six, #seven {
+    border-right: solid black 2px;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
