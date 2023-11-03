@@ -7,6 +7,16 @@ body {
     align-items: center;
 }
 
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 #gameboard {
     background-color: antiquewhite;
     border: solid black 2px;
