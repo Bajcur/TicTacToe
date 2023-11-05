@@ -29,13 +29,45 @@ const gameFlow = (function () {
     let activePlayer = oPlayer;
     let board = gameBoard.getBoard();
     function placeSign(row, column) {
-        board[row][column] = activePlayer.sign;
-        return board;
+        if (board[row][column] === "") {
+            board[row][column] = activePlayer.sign;
+            return board;
+        } else {
+            console.log("This cell is already occupied.");
+            return board;
+        }
     }
-    const updateBoard = () => console.log(gameBoard.getBoard());
 
-    return { placeSign, updateBoard }
+    const switchPlayers = () => {
+        activePlayer = activePlayer === oPlayer ? xPlayer : oPlayer;
+    };
+
+    function checkWin(){
+        const value = activePlayer.sign;
+        for (let i = 0; i < 3; i++) {
+            const arr = board[i].filter((el) => el === value);
+            if(arr.length === 3){
+                console.log("yes");
+            }
+        }
+    }
+
+    const updateBoard = () => console.log(board);
+
+    function playRound(row, column) {
+        placeSign(row, column);
+        updateBoard();
+        checkWin();
+        //switchPlayers();
+        
+    };
+
+    
+
+    return { placeSign, updateBoard, playRound }
 })();
+
+
 
 
 console.log(xPlayer.name);
