@@ -42,13 +42,46 @@ const gameFlow = (function () {
         activePlayer = activePlayer === oPlayer ? xPlayer : oPlayer;
     };
 
-    function checkWin(){
+    function checkWin() {
+        const trans = board[0].map((_, colIndex) => board.map(row => row[colIndex]));
         const value = activePlayer.sign;
+        let gameScore = 0;
         for (let i = 0; i < 3; i++) {
             const arr = board[i].filter((el) => el === value);
             if(arr.length === 3){
+                gameScore = 10;
                 console.log("yes");
             }
+        }
+        for (let i = 0; i < 3; i++) {
+            const arr = trans[i].filter((el) => el === value);
+            if(arr.length === 3){
+                gameScore = 10;
+                console.log("yes");
+            }
+        }
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] != "" && gameScore < 10) {
+                    gameScore++;
+                    console.log(gameScore);
+                };
+            }
+        }
+
+
+        const getScore = () => gameScore;
+
+        return { getScore }
+    };
+
+    const gameResult = () => {
+        const win = checkWin()
+        console.log(win.getScore());
+        if (win.getScore() === 9) {
+            console.log("It's a tie! Play again if you want!")
+        } else if (win.getScore() === 10) {
+            console.log("It's a Win!")
         }
     }
 
@@ -57,8 +90,9 @@ const gameFlow = (function () {
     function playRound(row, column) {
         placeSign(row, column);
         updateBoard();
-        checkWin();
-        //switchPlayers();
+        
+        gameResult();
+        switchPlayers();
         
     };
 
@@ -68,7 +102,16 @@ const gameFlow = (function () {
 })();
 
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
+
+function Go() {
+    for (let i = 0; i < 10; i++){
+        gameFlow.playRound(getRandomInt(3), getRandomInt(3))
+    }
+}
 
 console.log(xPlayer.name);
 console.log(gameBoard.getBoard());
