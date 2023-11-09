@@ -28,6 +28,7 @@ const xPlayer = createPlayer("xPlayer", "X");
 const gameFlow = (function () {
     let activePlayer = oPlayer;
     let board = gameBoard.getBoard();
+    let ifContinue = 0;
     function placeSign(row, column) {
         if (board[row][column] === "") {
             board[row][column] = activePlayer.sign;
@@ -75,29 +76,28 @@ const gameFlow = (function () {
             gameScore = 10;
         }
         
-
-        const getScore = () => gameScore;
-
-        return { getScore }
+        return gameScore;
     };
 
     const gameResult = () => {
-        const win = checkWin()
-        console.log(win.getScore());
-        if (win.getScore() === 9) {
+        const ifContinue = checkWin();
+        console.log(ifContinue);
+        if (ifContinue === 9) {
             console.log("It's a tie! Play again if you want!")
-        } else if (win.getScore() === 10) {
+        } else if (ifContinue === 10) {
             console.log("It's a Win!")
         }
+        return ifContinue;
     }
 
     const updateBoard = () => console.log(board);
+    const cont = () => ifContinue;
 
     
 
     
 
-    return { placeSign, updateBoard, gameResult, switchPlayers, checkWin}
+    return { placeSign, updateBoard, gameResult, switchPlayers, checkWin, cont}
 })();
 
 function playRound(row, column) {
@@ -105,30 +105,27 @@ function playRound(row, column) {
     gameFlow.updateBoard();
     gameFlow.gameResult();
     gameFlow.switchPlayers();
-    
 };
 
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
-
 function randomAi() {
+    const randomNumber = () => {
+        return Math.floor(Math.random() * 3);
+      }    
     let board = gameBoard.getBoard();
-    for (let i = 0; i < 10; i++){
-        let row = getRandomInt(3);
-        let column = getRandomInt(3);
-        if (board[row][column] === "") {
-            playRound(row, column);
-        } else {
-            continue
-        }
+    let row = randomNumber();
+    let column = randomNumber();
+    if (board[row][column] === "") {
+        playRound(row, column);
+    } else {
+        randomAi();
     }
 }
 
-console.log(xPlayer.name);
-console.log(gameBoard.getBoard());
+function playGame(row, column) {
+    playRound(row, column);
+    randomAi();
+}
+
 
 
 
