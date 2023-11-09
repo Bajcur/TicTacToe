@@ -68,7 +68,13 @@ const gameFlow = (function () {
                 };
             }
         }
-
+    
+        if (board[0][0] === value && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+            gameScore = 10;
+        }else if (board[2][0] === value && board[2][0] === board[1][1] && board[1][1] === board[0][2]) {
+            gameScore = 10;
+        }
+        
 
         const getScore = () => gameScore;
 
@@ -87,19 +93,20 @@ const gameFlow = (function () {
 
     const updateBoard = () => console.log(board);
 
-    function playRound(row, column) {
-        placeSign(row, column);
-        updateBoard();
-        
-        gameResult();
-        switchPlayers();
-        
-    };
+    
 
     
 
-    return { placeSign, updateBoard, playRound }
+    return { placeSign, updateBoard, gameResult, switchPlayers, checkWin}
 })();
+
+function playRound(row, column) {
+    gameFlow.placeSign(row, column);
+    gameFlow.updateBoard();
+    gameFlow.gameResult();
+    gameFlow.switchPlayers();
+    
+};
 
 
 function getRandomInt(max) {
@@ -107,9 +114,16 @@ function getRandomInt(max) {
   }
 
 
-function Go() {
+function randomAi() {
+    let board = gameBoard.getBoard();
     for (let i = 0; i < 10; i++){
-        gameFlow.playRound(getRandomInt(3), getRandomInt(3))
+        let row = getRandomInt(3);
+        let column = getRandomInt(3);
+        if (board[row][column] === "") {
+            playRound(row, column);
+        } else {
+            continue
+        }
     }
 }
 
