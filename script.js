@@ -124,8 +124,25 @@ function playGame(row, column) {
     }
 }
 
+const theBoard = (function () {
+    const zero = document.getElementById("00");
+    const fields = document.querySelectorAll(".box");
+    const fieldsArr = Array.from(fields);
+    return {zero, fieldsArr}
+})();
 
+function boardPrint() {
+    let board = gameBoard.getBoard();
+    theBoard.zero.textContent = board[0][0];
+}
 
+//zero.addEventListener("click", () => playGame(0,0));
+
+theBoard.fieldsArr.forEach((button) => {
+    button.addEventListener('click', () => {
+        console.log(button.id);
+    })
+});
 
 
 
