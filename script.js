@@ -51,21 +51,21 @@ const gameFlow = (function () {
             const arr = board[i].filter((el) => el === value);
             if(arr.length === 3){
                 gameScore = 10;
-                console.log("yes");
+                //console.log("yes");
             }
         }
         for (let i = 0; i < 3; i++) {
             const arr = trans[i].filter((el) => el === value);
             if(arr.length === 3){
                 gameScore = 10;
-                console.log("yes");
+                //console.log("yes");
             }
         }
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (board[i][j] != "" && gameScore < 10) {
                     gameScore++;
-                    console.log(gameScore);
+                    //console.log(gameScore);
                 };
             }
         }
@@ -78,33 +78,28 @@ const gameFlow = (function () {
         
         return gameScore;
     };
-
-    const gameResult = () => {
-        const ifContinue = checkWin();
-        console.log(ifContinue);
-        if (ifContinue === 9) {
-            console.log("It's a tie! Play again if you want!")
-        } else if (ifContinue === 10) {
-            console.log("It's a Win!")
-        }
-        return ifContinue;
-    }
-
     const updateBoard = () => console.log(board);
-    const cont = () => ifContinue;
-
+    const cont = () => console.log(ifContinue);
     
 
     
 
-    return { placeSign, updateBoard, gameResult, switchPlayers, checkWin, cont}
+    
+
+    return { placeSign, updateBoard, switchPlayers, checkWin, cont}
 })();
 
 function playRound(row, column) {
     gameFlow.placeSign(row, column);
     gameFlow.updateBoard();
-    gameFlow.gameResult();
-    gameFlow.switchPlayers();
+    //gameFlow.gameResult();
+    if (gameFlow.checkWin() === 9) {
+        console.log("It's a tie! Play again if you want!");
+    } else if (gameFlow.checkWin() === 10) {
+        console.log("It's a Win!");
+    } else {
+        gameFlow.switchPlayers();
+    }
 };
 
 function randomAi() {
@@ -115,6 +110,7 @@ function randomAi() {
     let row = randomNumber();
     let column = randomNumber();
     if (board[row][column] === "") {
+        //
         playRound(row, column);
     } else {
         randomAi();
@@ -123,7 +119,9 @@ function randomAi() {
 
 function playGame(row, column) {
     playRound(row, column);
-    randomAi();
+    if (gameFlow.checkWin() < 9) {
+        randomAi();
+    }
 }
 
 
@@ -131,31 +129,3 @@ function playGame(row, column) {
 
 
 
-/*
-const gameBoard = (function () {
-    let gameArray = ["O","X","O","X","O","X","O","X","O"];
-    return {gameArray};
-})();
-
-const gameFlow = (function () {
-
-})();
-
-function createPlayer (name, oX) {
-    
-    return { name, oX };
-}
-
-function displayBoard() {
-    let i = 0;
-    boxesArr.forEach(element => {
-        element.textContent = gameBoard.gameArray[i];
-        i++;
-    });
-
-}
-const board = document.getElementById("gameboard");
-const boxes = document.querySelectorAll(".box");
-const boxesArr = Array.from(boxes);
-displayBoard();
-*/
