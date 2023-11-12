@@ -86,7 +86,7 @@ const gameFlow = (function () {
 
     
 
-    return { placeSign, updateBoard, switchPlayers, checkWin, cont}
+    return { placeSign, updateBoard, switchPlayers, checkWin, cont, activePlayer }
 })();
 
 function playRound(row, column) {
@@ -95,8 +95,10 @@ function playRound(row, column) {
     //gameFlow.gameResult();
     if (gameFlow.checkWin() === 9) {
         console.log("It's a tie! Play again if you want!");
+        gameConclusion.tie();
     } else if (gameFlow.checkWin() === 10) {
         console.log("It's a Win!");
+        gameConclusion.win();
     } else {
         gameFlow.switchPlayers();
     }
@@ -130,7 +132,10 @@ const theBoard = (function () {
     const fields = document.querySelectorAll(".box");
     const fieldsArr = Array.from(fields);
     const switchButton = document.getElementById("switch");
-    return { fieldsArr, switchButton }
+    const options = document.getElementById("options");
+    const pve = document.getElementById("pve");
+    const pvpRandomAI = document.getElementById("pvp-random");
+    return { fieldsArr, switchButton, options, pve, pvpRandomAI }
 })();
 
 function boardPrint() {
@@ -139,20 +144,45 @@ function boardPrint() {
         field.textContent = board[field.id[0]][field.id[1]]
     })
 }
-//zero.addEventListener("click", () => playGame(0,0));
 
-theBoard.fieldsArr.forEach((field) => {
-    field.addEventListener('click', () => {
-        playGame(field.id[0],field.id[1]);
-        boardPrint();
-    })
-});
+const gameModes = (function () {
+    //player vs Random AI
+    theBoard.pvpRandomAI.addEventListener('click', () =>  {
+        theBoard.fieldsArr.forEach((field) => {
+            field.addEventListener('click', () => {
+                playGame(field.id[0],field.id[1]);
+                boardPrint();
+            })
+        });
+        theBoard.pvpRandomAI.disabled = true;
+        theBoard.pve.disabled = true;
+    });
+    //player vs player
+    theBoard.pve.addEventListener('click', () => {
+        theBoard.fieldsArr.forEach((field) => {
+            field.addEventListener('click', () => {
+                playRound(field.id[0],field.id[1]);
+                boardPrint();
+            })
+        });
+        theBoard.pvpRandomAI.disabled = true;
+        theBoard.pve.disabled = true;
+    });
+    //player vs unbeatable AI
+})();
 
 const switchButton = (function () {
-    theBoard.switchButton.addEventListener('click', () => gameFlow.switchPlayers() );
+    theBoard.switchButton.addEventListener('click', () => {
+        gameFlow.switchPlayers();
+        theBoard.switchButton.disabled = true;
+    });
 })();
 
 const gameConclusion = (function () {
     const div = document.createElement("div");
-
-})
+    div.id = "conclusion-text";
+    theBoard.options.appendChild(div);
+    const win = () => div.textContent = `${gameFlow.activePlayer.name} is a winner!`;
+    const tie = () => div.textContent = `It's a tie!`;
+    return { win, tie }
+})();
