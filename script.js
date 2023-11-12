@@ -22,8 +22,8 @@ function createPlayer (name, sign) {
     return { name, sign };
 }
 
-const oPlayer = createPlayer("oPlayer", "O");
-const xPlayer = createPlayer("xPlayer", "X");
+const oPlayer = createPlayer("First Player", "O");
+const xPlayer = createPlayer("Second Player", "X");
 
 const gameFlow = (function () {
     let activePlayer = oPlayer;
@@ -127,10 +127,10 @@ function playGame(row, column) {
 }
 
 const theBoard = (function () {
-    const zero = document.getElementById("00");
     const fields = document.querySelectorAll(".box");
     const fieldsArr = Array.from(fields);
-    return {zero, fieldsArr}
+    const switchButton = document.getElementById("switch");
+    return { fieldsArr, switchButton }
 })();
 
 function boardPrint() {
@@ -148,3 +148,11 @@ theBoard.fieldsArr.forEach((field) => {
     })
 });
 
+const switchButton = (function () {
+    theBoard.switchButton.addEventListener('click', () => gameFlow.switchPlayers() );
+})();
+
+const gameConclusion = (function () {
+    const div = document.createElement("div");
+
+})
