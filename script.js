@@ -118,7 +118,9 @@ function randomAi() {
 }
 
 function playGame(row, column) {
-    playRound(row, column);
+    if (gameFlow.checkWin() < 9) {
+        playRound(row, column);
+    }
     if (gameFlow.checkWin() < 9) {
         randomAi();
     }
@@ -133,16 +135,16 @@ const theBoard = (function () {
 
 function boardPrint() {
     let board = gameBoard.getBoard();
-    theBoard.zero.textContent = board[0][0];
+    theBoard.fieldsArr.forEach((field) => {
+        field.textContent = board[field.id[0]][field.id[1]]
+    })
 }
-
 //zero.addEventListener("click", () => playGame(0,0));
 
-theBoard.fieldsArr.forEach((button) => {
-    button.addEventListener('click', () => {
-        console.log(button.id);
+theBoard.fieldsArr.forEach((field) => {
+    field.addEventListener('click', () => {
+        playGame(field.id[0],field.id[1]);
+        boardPrint();
     })
 });
-
-
 
