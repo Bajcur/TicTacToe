@@ -135,7 +135,8 @@ const theBoard = (function () {
     const options = document.getElementById("options");
     const pve = document.getElementById("pve");
     const pvpRandomAI = document.getElementById("pvp-random");
-    return { fieldsArr, switchButton, options, pve, pvpRandomAI }
+    const submitBtn = document.getElementById("submitBtn");
+    return { fieldsArr, switchButton, options, pve, pvpRandomAI, submitBtn }
 })();
 
 function boardPrint() {
@@ -185,4 +186,16 @@ const gameConclusion = (function () {
     const win = () => div.textContent = `${gameFlow.activePlayer.name} is a winner!`;
     const tie = () => div.textContent = `It's a tie!`;
     return { win, tie }
+})();
+
+const reset = (function () {
+
+})();
+
+const createPlayers = (function () {
+    theBoard.submitBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        oPlayer.name = document.getElementById("oPlayer").value;
+        xPlayer.name = document.getElementById("oPlayer").value;
+    });
 })();

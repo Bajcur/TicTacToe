@@ -8,6 +8,22 @@
     <body>
         <script src="script.js" defer></script>
         <div id="main">
+            <form action="#" method="post">
+                <div class="fieldset">
+                    <fieldset>
+                        <legend>Let's play the game!</legend>
+                        <div class="input">
+                            <label for="oPlayer">O Player Name</label>
+                            <input type="text" name="O" id="oPlayer" autofocus/>
+                        </div>
+                        <div class="input">
+                            <label for="xPlayer">X Player Name</label>
+                            <input type="text" name="X" id="xPlayer">
+                        </div>
+                    </fieldset>
+                </div>
+                <button id="submitBtn" type="submit">Confirm names!</button>
+            </form>
             <div id="game-modes">
                 <button id="pve">Play vs your friend</button>
                 <button id="pvp-random">Play vs Easy AI</button>
