@@ -208,8 +208,9 @@ const createPlayers = (function () {
     theBoard.submitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         oPlayer.name = document.getElementById("oPlayer").value;
-        xPlayer.name = document.getElementById("xPlayer").value;
-        console.log(oPlayer.name);
-        console.log(xPlayer.name);
+        console.log(typeof(document.getElementById("xPlayer")));
+        if(document.getElementById("xPlayer") != null) {
+            xPlayer.name = document.getElementById("xPlayer").value;
+        }
     });
 })();
