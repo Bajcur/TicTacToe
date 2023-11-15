@@ -132,11 +132,12 @@ const theBoard = (function () {
     const fieldsArr = Array.from(fields);
     const switchButton = document.getElementById("switch");
     const options = document.getElementById("options");
-    const pve = document.getElementById("pve");
-    const pvpRandomAI = document.getElementById("pvp-random");
+    const pvp = document.getElementById("pvp");
+    const pveRandomAI = document.getElementById("pve-random");
     const submitBtn = document.getElementById("submitBtn");
+    const restartBtn = document.getElementById("restart");
     const fieldset = document.getElementById("players");
-    return { fieldsArr, switchButton, options, pve, pvpRandomAI, submitBtn, fieldset }
+    return { fieldsArr, switchButton, options, pvp, pveRandomAI, submitBtn, fieldset, restartBtn }
 })();
 
 function boardPrint() {
@@ -148,26 +149,26 @@ function boardPrint() {
 
 const gameModes = (function () {
     //player vs Random AI
-    theBoard.pvpRandomAI.addEventListener('click', () =>  {
+    theBoard.pveRandomAI.addEventListener('click', () =>  {
         theBoard.fieldsArr.forEach((field) => {
             field.addEventListener('click', () => {
                 playGame(field.id[0],field.id[1]);
                 boardPrint();
             })
         });
-        theBoard.pvpRandomAI.disabled = true;
-        theBoard.pve.disabled = true;
+        theBoard.pveRandomAI.disabled = true;
+        theBoard.pvp.disabled = true;
     });
     //player vs player
-    theBoard.pve.addEventListener('click', () => {
+    theBoard.pvp.addEventListener('click', () => {
         theBoard.fieldsArr.forEach((field) => {
             field.addEventListener('click', () => {
                 playRound(field.id[0],field.id[1]);
                 boardPrint();
-            })
+                });
         });
-        theBoard.pvpRandomAI.disabled = true;
-        theBoard.pve.disabled = true;
+        theBoard.pveRandomAI.disabled = true;
+        theBoard.pvp.disabled = true;
         const div = document.createElement("div");
         div.setAttribute("class", "input");
         const xPlayerInput = document.createElement("input");
@@ -201,7 +202,21 @@ const gameConclusion = (function () {
 })();
 
 const reset = (function () {
-
+    theBoard.restartBtn.addEventListener("click", () => {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                gameBoard.getBoard()[i][j] = "";
+            }
+        };
+        boardPrint();
+        theBoard.pveRandomAI.disabled = false;
+        theBoard.pvp.disabled = false;
+        theBoard.fieldsArr.forEach((field) => {
+            field.replaceWith(field.cloneNode(true));
+        });
+        const fields = document.querySelectorAll(".box");
+        theBoard.fieldsArr = Array.from(fields);
+    })
 })();
 
 const createPlayers = (function () {
