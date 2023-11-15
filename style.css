@@ -6,6 +6,15 @@ body {
     align-items: center;
 }
 
+input {
+    margin-left: 4px;
+}
+
+.input {
+    display: flex;
+    align-items: flex-end;
+}
+
 #gameboard {
     font-size: 72px;
     background-color: antiquewhite;

@@ -28,7 +28,6 @@ const xPlayer = createPlayer("Second Player", "X");
 const gameFlow = (function () {
     let activePlayer = oPlayer;
     let board = gameBoard.getBoard();
-    let ifContinue = 0;
     function placeSign(row, column) {
         if (board[row][column] === "") {
             board[row][column] = activePlayer.sign;
@@ -79,14 +78,14 @@ const gameFlow = (function () {
         return gameScore;
     };
     const updateBoard = () => console.log(board);
-    const cont = () => console.log(ifContinue);
+    const getPlayerName = () => activePlayer.name;
     
 
     
 
     
 
-    return { placeSign, updateBoard, switchPlayers, checkWin, cont, activePlayer }
+    return { placeSign, updateBoard, switchPlayers, checkWin, getPlayerName}
 })();
 
 function playRound(row, column) {
@@ -136,7 +135,8 @@ const theBoard = (function () {
     const pve = document.getElementById("pve");
     const pvpRandomAI = document.getElementById("pvp-random");
     const submitBtn = document.getElementById("submitBtn");
-    return { fieldsArr, switchButton, options, pve, pvpRandomAI, submitBtn }
+    const fieldset = document.getElementById("players");
+    return { fieldsArr, switchButton, options, pve, pvpRandomAI, submitBtn, fieldset }
 })();
 
 function boardPrint() {
@@ -168,6 +168,18 @@ const gameModes = (function () {
         });
         theBoard.pvpRandomAI.disabled = true;
         theBoard.pve.disabled = true;
+        const div = document.createElement("div");
+        div.setAttribute("class", "input");
+        const xPlayerInput = document.createElement("input");
+        xPlayerInput.setAttribute("type", "text");
+        xPlayerInput.setAttribute("name", "X");
+        xPlayerInput.setAttribute("id", "xPlayer");
+        const xPlayerLabel = document.createElement("label");
+        xPlayerLabel.setAttribute("for", "xPlayer");
+        xPlayerLabel.textContent = "X Player Name";
+        theBoard.fieldset.appendChild(div);
+        div.appendChild(xPlayerLabel);
+        div.appendChild(xPlayerInput);
     });
     //player vs unbeatable AI
 })();
@@ -183,7 +195,7 @@ const gameConclusion = (function () {
     const div = document.createElement("div");
     div.id = "conclusion-text";
     theBoard.options.appendChild(div);
-    const win = () => div.textContent = `${gameFlow.activePlayer.name} is a winner!`;
+    const win = () => div.textContent = `${gameFlow.getPlayerName()} is a winner!`;
     const tie = () => div.textContent = `It's a tie!`;
     return { win, tie }
 })();
@@ -196,6 +208,8 @@ const createPlayers = (function () {
     theBoard.submitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         oPlayer.name = document.getElementById("oPlayer").value;
-        xPlayer.name = document.getElementById("oPlayer").value;
+        xPlayer.name = document.getElementById("xPlayer").value;
+        console.log(oPlayer.name);
+        console.log(xPlayer.name);
     });
 })();

@@ -8,26 +8,26 @@
     <body>
         <script src="script.js" defer></script>
         <div id="main">
+            <div id="game-modes">
+                <button id="pve">Play vs your friend</button>
+                <button id="pvp-random">Play vs Easy AI</button>
+            </div>
             <form action="#" method="post">
                 <div class="fieldset">
-                    <fieldset>
+                    <fieldset id="players">
                         <legend>Let's play the game!</legend>
                         <div class="input">
                             <label for="oPlayer">O Player Name</label>
                             <input type="text" name="O" id="oPlayer" autofocus/>
                         </div>
-                        <div class="input">
+                        <!--<div class="input">
                             <label for="xPlayer">X Player Name</label>
                             <input type="text" name="X" id="xPlayer">
-                        </div>
+                        </div>-->
                     </fieldset>
                 </div>
                 <button id="submitBtn" type="submit">Confirm names!</button>
             </form>
-            <div id="game-modes">
-                <button id="pve">Play vs your friend</button>
-                <button id="pvp-random">Play vs Easy AI</button>
-            </div>
             <div id="options">
                 <div id="current-sign"></div>
                 <button id="switch">Switch sign</button>
