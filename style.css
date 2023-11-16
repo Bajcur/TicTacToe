@@ -1,9 +1,56 @@
 body {
     margin: 0;
     min-height: 100vh;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin-top: 20px;
+}
+
+#setup {
+    display: grid;
+    grid-template-rows: 35px 105px 35px;
+    gap: 15px;
+}
+
+#game-modes {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+#game-modes > button {
+    padding: 2px;
+    font-size: 20px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    width: 135px;
+    background-color: #7dd3fc;
+    border: none;
+    border-radius: 3px;
+}
+
+#game-modes > button:hover {
+    background-color: #5dc7f8;
+}
+
+#form {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#players {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 input {
@@ -22,6 +69,10 @@ input {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
+}
+
+.box:hover {
+    background-color: rgb(252, 224, 189);
 }
 
 #\30 0, #\30 1, #\30 2, #\31 0, #\31 1, #\31 2 {
