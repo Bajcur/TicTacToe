@@ -104,6 +104,7 @@ function playRound(row, column) {
 };
 
 function randomAi() {
+    xPlayer.name = "random bot";
     const randomNumber = () => {
         return Math.floor(Math.random() * 3);
       }    
@@ -171,6 +172,7 @@ const gameModes = (function () {
         theBoard.pvp.disabled = true;
         const div = document.createElement("div");
         div.setAttribute("class", "input");
+        div.setAttribute("id", "xPlayerName");
         const xPlayerInput = document.createElement("input");
         xPlayerInput.setAttribute("type", "text");
         xPlayerInput.setAttribute("name", "X");
@@ -194,11 +196,12 @@ const switchButton = (function () {
 
 const gameConclusion = (function () {
     const div = document.createElement("div");
-    div.id = "conclusion-text";
+    div.setAttribute("id", "conclusion-text");
     theBoard.options.appendChild(div);
     const win = () => div.textContent = `${gameFlow.getPlayerName()} is a winner!`;
     const tie = () => div.textContent = `It's a tie!`;
-    return { win, tie }
+    const getDiv = () => div;
+    return { win, tie, getDiv }
 })();
 
 const reset = (function () {
@@ -216,6 +219,8 @@ const reset = (function () {
         });
         const fields = document.querySelectorAll(".box");
         theBoard.fieldsArr = Array.from(fields);
+        document.getElementById("xPlayerName").remove();
+        gameConclusion.getDiv().remove();
     })
 })();
 
